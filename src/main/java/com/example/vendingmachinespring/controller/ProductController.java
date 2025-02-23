@@ -6,6 +6,7 @@ import com.example.vendingmachinespring.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -27,7 +28,21 @@ public class ProductController {
         return productService.addProduct(product);
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        Optional<Product> product = productService.getProductById(id);
+        return product.orElse(null);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+    }
+
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        return productService.updateProduct(id, product);
+    }
 
 
 }
